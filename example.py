@@ -8,4 +8,4 @@ print(Configs["B"])
 
 del Configs["B"]
 
-print(Configs["B"])
+print(Configs["B"])Î
