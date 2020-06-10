@@ -3,6 +3,7 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
+
 class ConfigError(Exception):
     def __init__(self, message):
         super().__init__(message)
@@ -10,6 +11,7 @@ class ConfigError(Exception):
 
     def __str__(self):
         return f"Config Manager Error : {self.message}"
+
 
 class ConfigHolder(dict):
     def __init__(self, init={}, name=None):
@@ -45,15 +47,13 @@ class Config(ConfigHolder):
     def load_initial_env(self, fname):
         env_file = Path(".env")
         load_dotenv(verbose=True, dotenv_path=env_file)
-        
+
         for x in self.required_envs:
             if os.environ.get(x, None) == None:
                 raise ConfigError(f"The {x} envoronment is missing!")
             else:
                 self[x] = os.environ.get(x)
 
-       
         for k, v in self.optional_envs.items():
             self[k] = os.environ.get(k, v)
-
 
